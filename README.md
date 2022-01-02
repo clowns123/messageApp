@@ -11,6 +11,8 @@
 	- webpack @types/webpack @types/node
 		- 웹팩 설정으로 ts, css, json 등 최신 문법 js를 하나로 합칩
 	- dotenv
+	- cross-env 
+	  - 웹팩 명령어를 윈도우 리눅스 둘 다 사용 가능하게
 - backend
 	- express
 		- 서버 프레임워크
@@ -22,9 +24,16 @@
 
 # 2. 폴더 구조
 - frontend
-	- hooks : 
-	- components
-	- layouts
-	- pages
-	- utils
-	- typings
+	- hooks : 비즈니스 로직
+	
+	- components : 각종 컴포넌트들
+	
+	- layouts : 공통 레이아웃
+	
+	- pages : 서비스 페이지
+	
+	- utils : 각종 라이브러리
+	
+	- typings : 타입스크립트의 타입
+	
+	  
