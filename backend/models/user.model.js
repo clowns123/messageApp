@@ -1,25 +1,42 @@
-// user.model.js
-const mongoose = require("mongoose"); // mongoose 모듈 불러오기
-const Schema = mongoose.Schema; 
-const userSchema = new Schema(
+import mongoose from 'mongoose'
+const Schema = mongoose.Schema;
+
+export const userSchema = new Schema(
   {
-    username: {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
       type: String,
       required: true,
       unique: true,
-      trim: true,
-      minlength: 3,
     },
-    age: {
-      type: Number,
+    token: {
+      type: String,
       required: true,
       unique: true,
-      trim: true,
-      maxlength: 3,
     },
+    imageUrl: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    channels: [
+      {
+        channelId: { type: String, required: true, unique: true },
+        channelName: { type: String, required: true },
+      },
+    ],
   },
   { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
-module.exports = User;
+
+export default User;

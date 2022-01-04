@@ -28,7 +28,7 @@ const config: Configuration = {
     },
   },
   entry: {
-    app: './client',
+    app: ['babel-polyfill', './client'],
   },
   target: ['web', 'es5'],
   module: {

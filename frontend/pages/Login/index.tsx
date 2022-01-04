@@ -1,19 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoginContent, Logo, Wrapper } from './styled';
-import GoogleLogin from 'react-google-login';
+import { GoogleLogin } from 'react-google-login';
+import { onLogout } from '@utils/logout';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  //사용자 정보를 담아둘 userObj
-  const [userObj, setUserObj] = React.useState({
-    email: '',
+  useEffect(() => {
+    console.log(sessionStorage.getItem('login_session'));
+  }, [])
+  const [userObj, setUserObj] = useState({
     name: '',
+    email: '',
+    access_token: '',
+    imageUrl: '',
   });
-  console.log(JSON.stringify(process.env.CLIENT_ID));
+  const navigate = useNavigate();
+  const responeGoogle = async (res: any) => {
+    if (res.error) {
+      console.error(res.error);
+      return;
+    }
 
-  //로그인 성공시 res처리
-  const onLoginSuccess = (res: any) => {
-    console.log('onLoginSuccess : ', res);
-    setUserObj({ ...userObj, email: res.profileObj.email, name: res.profileObj.name });
+    const { name = '', email = '', access_token = '', imageUrl = '' } = { ...res.profileObj, ...res.tokenObj };
+    const loginInfo = { name, email, token: access_token, imageUrl };
+    console.log(loginInfo);
+
+    const regEmail = /@rsupport.com/;
+    if (!regEmail.test(email)) {
+      alert('rsupport 이메일로 로그인해주세요');
+      onLogout();
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${process.env.BACK_URL}users/add`, {
+        ...loginInfo,
+      });
+      console.log(res);
+    } catch (error) {}
+    sessionStorage.setItem('login_session', JSON.stringify(loginInfo));
+    navigate('/main')
   };
 
   return (
@@ -21,10 +48,11 @@ const Login = () => {
       <Logo />
       <LoginContent>
         <GoogleLogin
-          clientId={'32155834743-hvm93s2a53smgo7bi90n6mgu9m58tmhe.apps.googleusercontent.com'}
-          buttonText="Google"
-          onSuccess={(result) => onLoginSuccess(result)}
-          onFailure={(result) => console.log('onFailure : ', result)}
+          clientId={'32155834743-m1c9gdk1q4dl9lcnqnendul1eb0q3pho.apps.googleusercontent.com'}
+          buttonText="알서포트 이메일로 로그인"
+          onSuccess={(result) => responeGoogle(result)}
+          onFailure={(result) => responeGoogle(result)}
+          cookiePolicy={'single_host_origin'}
         />
       </LoginContent>
     </Wrapper>

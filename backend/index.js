@@ -1,7 +1,10 @@
-const express = require("express"); // express 미들웨어
-const cors = require("cors"); // cors 미들웨어
-const mongoose = require("mongoose"); // mongoose
-require("dotenv").config(); // 환경변수를 위한 dotenv
+import express from 'express'
+import cors from 'cors'
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+import channelRouter from "./routes/channel.js"
+import userRouter from "./routes/users.js"
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -12,17 +15,15 @@ app.use(express.json());
 const uri = process.env.ATLAS_URI; // mongoDB Connect 정보
 mongoose.connect(uri, {
 	useNewUrlParser: true, 
-	useUnifiedTopology: true 
+	useUnifiedTopology: true,
 });
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("MongoDB database connection succes");
 });
 
-const exercisesRouter = require("./routes/exercises");
-const userRouter = require("./routes/users");
 
-app.use("/exercises", exercisesRouter);
+app.use("/channel", channelRouter);
 app.use("/users", userRouter);
 
 app.listen(port, () => {

@@ -13,6 +13,8 @@
 	- dotenv
 	- cross-env 
 	  - 웹팩 명령어를 윈도우 리눅스 둘 다 사용 가능하게
+	- axios
+	  - 백엔드 비동기 통신
 - backend
 	- express
 		- 서버 프레임워크
@@ -21,6 +23,8 @@
 	- dotenv
 	- mongoose
 		- 서버와 몽고디비 연결
+	- googleapis
+		- 구글 토큰 검증
 
 # 2. 폴더 구조
 - frontend
