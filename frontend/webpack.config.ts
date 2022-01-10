@@ -4,7 +4,7 @@ import webpack, { Configuration as WebpackConfiguration } from 'webpack';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 // import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
-import Dotenv from 'dotenv-webpack'
+import Dotenv from 'dotenv-webpack';
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -25,6 +25,7 @@ const config: Configuration = {
       '@utils': path.resolve(__dirname, 'utils'),
       '@typings': path.resolve(__dirname, 'typings'),
       '@assects': path.resolve(__dirname, 'assects'),
+      '@atoms': path.resolve(__dirname, 'atoms'),
     },
   },
   entry: {
@@ -40,7 +41,7 @@ const config: Configuration = {
           name: 'static/media/[name].[hash:8].[ext]',
           // name: '[name].[ext]',
           // outputPath: 'images/'
-        }
+        },
       },
       {
         test: /\.tsx?$/,
@@ -81,8 +82,7 @@ const config: Configuration = {
       // },
     }),
     new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
-    new Dotenv()
-
+    new Dotenv(),
   ],
   output: {
     path: path.join(__dirname, 'dist'),

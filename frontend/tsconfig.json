@@ -19,7 +19,8 @@
 		"@pages/*": ["pages/*"],
 		"@utils/*": ["utils/*"],
 		"@typings/*": ["typings/*"],
-		"@assects/*": ["assects/*"]
+		"@assects/*": ["assects/*"],
+		"@atoms/*": ["atoms/*"]
 	  }
 	}
   }
