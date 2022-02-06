@@ -5,13 +5,10 @@ import useLogout from '@utils/useLogout';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { loginState } from '@atoms/loginState';
+import { userInfoData } from '@atoms/userInfo';
 
 const Login = () => {
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-  useEffect(() => {
-    console.log(sessionStorage.getItem('login_session'));
-  }, []);
+  const [_, setUserInfo] = useRecoilState(userInfoData);
 
   const [userObj, setUserObj] = useState({
     name: '',
@@ -19,7 +16,11 @@ const Login = () => {
     access_token: '',
     imageUrl: '',
   });
+  
   const navigate = useNavigate();
+  useEffect(() => {
+    setUserInfo(userObj)
+  }, [userObj])
   const responeGoogle = async (res: any) => {
     if (res.error) {
       console.error(res.error);
@@ -28,23 +29,16 @@ const Login = () => {
 
     const { name = '', email = '', access_token = '', imageUrl = '' } = { ...res.profileObj, ...res.tokenObj };
     const loginInfo = { name, email, token: access_token, imageUrl };
-    console.log(loginInfo);
+    setUserObj({name, email, access_token, imageUrl})
 
     const regEmail = /@rsupport.com/;
     if (!regEmail.test(email)) {
       alert('rsupport 이메일로 로그인해주세요');
-      useLogout();
       return;
     }
 
-    // try {
-    //   const res = await axios.post(`${process.env.BACK_URL}users/add`, {
-    //     ...loginInfo,
-    //   });
-    //   console.log(res);
-    // } catch (error) {}
     sessionStorage.setItem('login_session', JSON.stringify(loginInfo));
-    navigate('/main');
+    navigate('/workspace');
   };
 
   return (
