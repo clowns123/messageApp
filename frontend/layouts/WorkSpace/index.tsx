@@ -14,7 +14,6 @@ import {
   Workspaces,
   WorkspaceWrapper,
 } from './styles';
-import gravatar from 'gravatar';
 import { Route, Routes } from 'react-router';
 import loadable from '@loadable/component';
 const Channel = loadable(() => import('@pages/Channel'));
@@ -32,17 +31,19 @@ const WorkSpace: FC = ({ children }) => {
       if (userInfo.access_token === '') {
         if (getLocalstorage) {
           setUserInfo(JSON.parse(getLocalstorage));
-          console.log('userInfo1 : ', userInfo);
         }
       }
     }
   }, []);
+  useEffect(() => {
+    console.log('userInfo1 : ', userInfo);
+  }, [userInfo])
 
   return (
     <>
       <Header>
         <RightMenu>
-          <ProfileImg src={gravatar.url(userInfo.email, { s: '28px', d: 'retro' })} alt={userInfo.name} />
+          <ProfileImg src={userInfo.imageUrl} alt={userInfo.name} />
         </RightMenu>
         <button onClick={logout}>로그아웃</button>
       </Header>

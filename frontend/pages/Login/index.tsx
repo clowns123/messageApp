@@ -4,11 +4,13 @@ import { GoogleLogin } from 'react-google-login';
 import useLogout from '@utils/useLogout';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { userInfoData } from '@atoms/userInfo';
+import { loginState } from '@atoms/loginState';
 
 const Login = () => {
   const [_, setUserInfo] = useRecoilState(userInfoData);
+  const setLogin = useSetRecoilState(loginState);
 
   const [userObj, setUserObj] = useState({
     name: '',
@@ -16,11 +18,12 @@ const Login = () => {
     access_token: '',
     imageUrl: '',
   });
-  
+
   const navigate = useNavigate();
   useEffect(() => {
-    setUserInfo(userObj)
-  }, [userObj])
+    setUserInfo(userObj);
+  }, [userObj]);
+
   const responeGoogle = async (res: any) => {
     if (res.error) {
       console.error(res.error);
@@ -29,7 +32,7 @@ const Login = () => {
 
     const { name = '', email = '', access_token = '', imageUrl = '' } = { ...res.profileObj, ...res.tokenObj };
     const loginInfo = { name, email, token: access_token, imageUrl };
-    setUserObj({name, email, access_token, imageUrl})
+    setUserObj({ name, email, access_token, imageUrl });
 
     const regEmail = /@rsupport.com/;
     if (!regEmail.test(email)) {
@@ -39,6 +42,7 @@ const Login = () => {
 
     sessionStorage.setItem('login_session', JSON.stringify(loginInfo));
     navigate('/workspace');
+    setLogin(true);
   };
 
   return (

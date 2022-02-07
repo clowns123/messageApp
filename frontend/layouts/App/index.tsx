@@ -1,29 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
-import { useNavigate } from 'react-router';
 import NotFound from '@pages/NotFound';
 import checkLogin from '@utils/checkLogin';
+import loadable from '@loadable/component';
 import { useRecoilState } from 'recoil';
 import { loginState } from '@atoms/loginState';
-import loadable from '@loadable/component';
 
 const WorkSpace = loadable(() => import('@layouts/WorkSpace'));
 const Login = loadable(() => import('@pages/Login'));
 
 const App = () => {
-  const navigate = useNavigate();
   const [isLogin, _] = useRecoilState(loginState);
-
   useEffect(() => {
-    navigate('/');
-    console.log("ghkdxogus login check");
-  }, [isLogin]);
-
+    console.log("ghkdxogus isLogin ", isLogin);
+  }, [isLogin])
   return (
       <Routes>
-        {checkLogin() ? (
+        {isLogin ? (
           <>
-            <Route path="/" element={<WorkSpace />} />
             <Route path="/workspace/*" element={<WorkSpace />} />
           </>
         ) : (
