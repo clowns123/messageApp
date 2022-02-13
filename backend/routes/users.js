@@ -1,4 +1,4 @@
-import express from "express"
+import express from "express";
 import User from "../models/user.model.js";
 
 const router = express.Router();
@@ -10,12 +10,42 @@ router.get("/", (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.post("/add", (req, res) => {
-  const { name, email, token, imageUrl } = req.body;
-  const newUser = new User({ name, email, token, imageUrl });
+router.post("/", (req, res) => {
+  const { name, email } = req.body;
+  const newUser = new User({ name, email });
+  console.log("ghkdxogus ", newUser);
   newUser
     .save()
     .then(() => res.json("User added!"))
     .catch((err) => res.status(400).json("Error: " + err));
 });
+
+router.delete("/user", (req, res) => {
+  const { email } = req.body;
+  User.deleteOne({ email }, (err, results) => {
+    // 에러 발생 시, 클라이언트로 에러 전송
+    if (err) {
+      console.error("삭제 중 에러 발생 : " + err.stack);
+      throw err;
+    }
+    // 결과 발생 시, 데이터 전송
+    if (results) {
+      console.log(results);
+      res.send(email + " 삭제 완료");
+    }
+  });
+});
+
+router.get("/user/:email", (req, res) => {
+  const { email } = req.params;
+
+  User.findOne({ email })
+    .then((user) => res.json(user))
+    .catch((err) => {
+      res.status(400).json("Error: " + err);
+    });
+
+  return;
+});
+
 export default router;

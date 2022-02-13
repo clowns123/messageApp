@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 export const userSchema = new Schema(
@@ -12,27 +12,15 @@ export const userSchema = new Schema(
       required: true,
       unique: true,
     },
-    token: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    channels: [
-      {
-        channelId: { type: String, required: true, unique: true },
-        channelName: { type: String, required: true },
-      },
-    ],
+    // channels: [
+    //   {
+    //     channelId: {
+    //       type: Schema.Types.ObjectId,
+    //       ref: "Channel",
+    //       required: true,
+    //     },
+    //   },
+    // ],
   },
   { timestamps: true }
 );

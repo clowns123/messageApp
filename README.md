@@ -25,6 +25,8 @@
 		- 서버와 몽고디비 연결
 	- googleapis
 		- 구글 토큰 검증
+	- mongoose-sequence
+	  - 몽고디비 자동 번호 증가
 
 # 2. 폴더 구조
 - frontend
