@@ -192,3 +192,7 @@ export const WorkspaceButton = styled.button`
   color: black;
   cursor: pointer;
 `;
+
+export const MenuImg = styled.img`
+  width: 38px;
+`

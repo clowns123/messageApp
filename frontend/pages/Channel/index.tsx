@@ -2,11 +2,11 @@ import WorkSpace from '@layouts/WorkSpace';
 import React from 'react';
 
 const Channel = () => {
-	return (
-		<>
-			채널입니다.
-		</>
-	);
+  return (
+    <>
+      <div>채널입니다.</div>
+    </>
+  );
 };
 
 export default Channel;
