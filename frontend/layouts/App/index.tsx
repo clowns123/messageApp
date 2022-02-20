@@ -11,9 +11,6 @@ const Login = loadable(() => import('@pages/Login'));
 
 const App = () => {
   const [isLogin, _] = useRecoilState(loginState);
-  useEffect(() => {
-    console.log("ghkdxogus isLogin ", isLogin);
-  }, [isLogin])
   return (
       <Routes>
         {isLogin ? (

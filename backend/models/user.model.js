@@ -12,15 +12,15 @@ export const userSchema = new Schema(
       required: true,
       unique: true,
     },
-    // channels: [
-    //   {
-    //     channelId: {
-    //       type: Schema.Types.ObjectId,
-    //       ref: "Channel",
-    //       required: true,
-    //     },
-    //   },
-    // ],
+    channels: [
+      {
+        channelId: {
+          type: Schema.Types.ObjectId,
+          ref: "Channel",
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

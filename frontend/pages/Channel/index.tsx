@@ -1,5 +1,5 @@
 import WorkSpace from '@layouts/WorkSpace';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Channel = () => {
   return (

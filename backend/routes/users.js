@@ -13,7 +13,6 @@ router.get("/", (req, res) => {
 router.post("/", (req, res) => {
   const { name, email } = req.body;
   const newUser = new User({ name, email });
-  console.log("ghkdxogus ", newUser);
   newUser
     .save()
     .then(() => res.json("User added!"))
@@ -45,7 +44,9 @@ router.get("/user/:email", (req, res) => {
       res.status(400).json("Error: " + err);
     });
 
-  return;
+  
+    res.json("ㅅㄷㄴㅅ")
+  
 });
 
 export default router;

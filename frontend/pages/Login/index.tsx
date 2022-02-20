@@ -39,7 +39,7 @@ const Login = () => {
       alert('rsupport 이메일로 로그인해주세요');
       return;
     }
-
+    
     sessionStorage.setItem('login_session', JSON.stringify(loginInfo));
     navigate('/workspace');
     setLogin(true);

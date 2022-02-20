@@ -75,6 +75,7 @@ const config: Configuration = {
     ],
   },
   plugins: [
+    new Dotenv(),
     new ForkTsCheckerWebpackPlugin({
       async: false,
       // eslint: {
@@ -82,7 +83,6 @@ const config: Configuration = {
       // },
     }),
     new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
-    new Dotenv(),
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -96,13 +96,14 @@ const config: Configuration = {
     static: { directory: path.resolve(__dirname) },
     proxy: {
       '/api/': {
-        target: 'http://localhost:3095',
+        target: 'http://localhost:4000',
         changeOrigin: true,
-        ws: true,
       },
     },
   },
 };
+
+if (config.plugins) config.plugins.push(new Dotenv());
 
 if (isDevelopment && config.plugins) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());

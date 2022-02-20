@@ -4,7 +4,6 @@ import autoIdSetting from "../utils/auto-id-setter.js";
 const Schema = mongoose.Schema;
 const channelSchema = new Schema(
   {
-    // channelId: { type: Number, required: true, unique: true },
     channelName: { type: String, required: true },
     private: {
       type: Boolean,

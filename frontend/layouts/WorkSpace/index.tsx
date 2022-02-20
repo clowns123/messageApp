@@ -20,6 +20,10 @@ import {
 import { Route, Routes } from 'react-router';
 import loadable from '@loadable/component';
 import Menu from '@components/Menu';
+import { useQuery, useQueryClient } from 'react-query';
+import { IUser } from 'types/db';
+import fetcher from '@utils/fetcher';
+
 const Channel = loadable(() => import('@pages/Channel'));
 const DirectMessage = loadable(() => import('@pages/DirectMessage'));
 
@@ -29,7 +33,14 @@ const WorkSpace: FC = ({ children }) => {
   const getLocalstorage = sessionStorage.getItem('login_session');
   const [showUserMenu, setShowUserMenu] = useState(false);
   const logout = useLogout();
+  console.log("ghkdxogus userInfo.email : ", userInfo.email);
+  
+  const { data: userData } = useQuery<IUser | false>('user', () => fetcher({ queryKey: `/api/users/user/${userInfo.email && "no"}` }), {});
 
+  useEffect(() => {
+    console.log("ghkdxogus userData ", userData)
+  }, [userData])
+  
   const onClickUserProfile = useCallback(() => {
     setShowUserMenu((prev) => !prev);
   }, []);
@@ -43,9 +54,6 @@ const WorkSpace: FC = ({ children }) => {
       }
     }
   }, []);
-  useEffect(() => {
-    console.log('userInfo1 : ', userInfo);
-  }, [userInfo]);
 
   return (
     <>

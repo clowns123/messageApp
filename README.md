@@ -15,6 +15,10 @@
 	  - 웹팩 명령어를 윈도우 리눅스 둘 다 사용 가능하게
 	- axios
 	  - 백엔드 비동기 통신
+	- react-query
+		- 백엔드 비동기 통신
+	- dotenv-webpack
+		- 웹팩 dotenv 사용
 - backend
 	- express
 		- 서버 프레임워크
