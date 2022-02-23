@@ -35,7 +35,7 @@ router.delete("/user", (req, res) => {
   });
 });
 
-router.get("/user/:email", (req, res) => {
+router.get("/user/:email", async (req, res) => {
   const { email } = req.params;
 
   User.findOne({ email })
@@ -43,10 +43,6 @@ router.get("/user/:email", (req, res) => {
     .catch((err) => {
       res.status(400).json("Error: " + err);
     });
-
-  
-    res.json("ㅅㄷㄴㅅ")
-  
 });
 
 export default router;

@@ -7,7 +7,7 @@ const channelSchema = new Schema(
     channelName: { type: String, required: true },
     private: {
       type: Boolean,
-      required: true,
+      default: false,
     },
   },
   {

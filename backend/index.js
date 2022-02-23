@@ -17,12 +17,13 @@ mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("MongoDB database connection succes");
 });
 
-app.use("/api/channel", channelRouter);
+app.use("/api/channels", channelRouter);
 app.use("/api/users", userRouter);
 
 app.listen(port, () => {
