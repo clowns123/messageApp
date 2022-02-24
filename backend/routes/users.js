@@ -21,6 +21,7 @@ router.post("/", (req, res) => {
 
 router.delete("/user", (req, res) => {
   const { email } = req.body;
+  if (!email) res.send("json을 확인하세요");
   User.deleteOne({ email }, (err, results) => {
     // 에러 발생 시, 클라이언트로 에러 전송
     if (err) {

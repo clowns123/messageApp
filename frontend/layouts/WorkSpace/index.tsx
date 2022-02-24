@@ -14,15 +14,16 @@ import {
   ProfileModal,
   RightMenu,
   WorkspaceName,
-  Workspaces,
   WorkspaceWrapper,
 } from './styles';
 import { Route, Routes } from 'react-router';
 import loadable from '@loadable/component';
 import Menu from '@components/Menu';
 import { useQuery, useQueryClient } from 'react-query';
-import { IUser } from 'types/db';
+import { Ichannel, IUser } from 'types/db';
 import fetcher from '@utils/fetcher';
+import ChannelList from '@components/ChannelList';
+import MessageList from '@components/MessageList';
 
 const Channel = loadable(() => import('@pages/Channel'));
 const DirectMessage = loadable(() => import('@pages/DirectMessage'));
@@ -33,14 +34,14 @@ const WorkSpace: FC = ({ children }) => {
   const getLocalstorage = sessionStorage.getItem('login_session');
   const [showUserMenu, setShowUserMenu] = useState(false);
   const logout = useLogout();
-  console.log("ghkdxogus userInfo.email : ", userInfo.email);
-  
-  const { data: userData } = useQuery<IUser | false>('user', () => fetcher({ queryKey: `/api/users/user/${userInfo.email && "no"}` }), {});
+  console.log('ghkdxogus userInfo.email : ', userInfo.email);
+
+  const { data: userData } = useQuery<IUser | false>('user', () => fetcher({ queryKey: '/api/users' }), {});
 
   useEffect(() => {
-    console.log("ghkdxogus userData ", userData)
-  }, [userData])
-  
+    console.log('ghkdxogus userData ', userData);
+  }, [userData]);
+
   const onClickUserProfile = useCallback(() => {
     setShowUserMenu((prev) => !prev);
   }, []);
@@ -77,15 +78,18 @@ const WorkSpace: FC = ({ children }) => {
         </RightMenu>
       </Header>
       <WorkspaceWrapper>
-        <Workspaces>test</Workspaces>
         <Channels>
           <WorkspaceName>Channels</WorkspaceName>
-          <MenuScroll>menu Scroll</MenuScroll>
+          <MenuScroll>
+            <ChannelList />
+            <MessageList />
+          </MenuScroll>
         </Channels>
         <Chats>
+          no
           <Routes>
-            <Route path="channel" element={<Channel />} />
-            <Route path="dm" element={<DirectMessage />} />
+            <Route path="/channel/*" element={<Channel />} />
+            <Route path="/dm/*" element={<DirectMessage />} />
           </Routes>
         </Chats>
       </WorkspaceWrapper>

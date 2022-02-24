@@ -59,19 +59,6 @@ export const WorkspaceWrapper = styled.div`
   flex: 1;
 `;
 
-export const Workspaces = styled.div`
-  width: 65px;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  background: #3f0e40;
-  border-top: 1px solid rgb(82, 38, 83);
-  border-right: 1px solid rgb(82, 38, 83);
-  vertical-align: top;
-  text-align: center;
-  padding: 15px 0 0;
-`;
-
 export const Channels = styled.nav`
   width: 260px;
   display: inline-flex;
@@ -195,4 +182,4 @@ export const WorkspaceButton = styled.button`
 
 export const MenuImg = styled.img`
   width: 38px;
-`
+`;

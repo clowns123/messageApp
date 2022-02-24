@@ -1,12 +1,11 @@
 import WorkSpace from '@layouts/WorkSpace';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const DirectMessage = () => {
-	return (
-		<>
-			DM입니다.
-		</>
-	);
+  useEffect(() => {
+    console.log('채널입장');
+  }, []);
+  return <>DM입니다.</>;
 };
 
 export default DirectMessage;

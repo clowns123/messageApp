@@ -33,9 +33,9 @@ router.get("/channel/:channelId", async (req, res) => {
     });
 });
 
-router.delete("/channel", (req, res) => {
-  const { channelId } = req.body;
-  User.deleteOne({ channelId }, (err, results) => {
+router.delete("/channel/:channelId", (req, res) => {
+  const { channelId } = req.params;
+  Channel.deleteOne({ channelId }, (err, results) => {
     // 에러 발생 시, 클라이언트로 에러 전송
     if (err) {
       console.error("삭제 중 에러 발생 : " + err.stack);
