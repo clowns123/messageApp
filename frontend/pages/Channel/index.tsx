@@ -1,5 +1,6 @@
 import ChatBox from '@components/ChatBox';
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 
 const Channel = () => {
   useEffect(() => {
@@ -8,9 +9,17 @@ const Channel = () => {
   return (
     <>
       <div>채널입니다.</div>
-      <ChatBox />
+      <ChatBoxWapperStyle>
+        <ChatBox />
+      </ChatBoxWapperStyle>
     </>
   );
 };
+
+const ChatBoxWapperStyle = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+`;
 
 export default Channel;
