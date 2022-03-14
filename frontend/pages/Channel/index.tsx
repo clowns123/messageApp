@@ -7,19 +7,21 @@ const Channel = () => {
     console.log('채널입장');
   }, []);
   return (
-    <>
+    <ChannelWapper>
       <div>채널입니다.</div>
       <ChatBoxWapperStyle>
         <ChatBox />
       </ChatBoxWapperStyle>
-    </>
+    </ChannelWapper>
   );
 };
 
+const ChannelWapper = styled.div`
+  width: 100%;
+`;
 const ChatBoxWapperStyle = styled.div`
   position: fixed;
   bottom: 0;
-  width: 100%;
 `;
 
 export default Channel;
