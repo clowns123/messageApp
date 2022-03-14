@@ -1,7 +1,6 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-console.log('ghkdxogus env : ', process.env);
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 const REACT_APP_FIREBASE_API_KEY = 'AIzaSyAGSXj1CpEzBsLb15eaCGU6VWPyfAWV7CU';
 const REACT_APP_AUTH_DOMAIN = 'mess-337014.firebaseapp.com';
@@ -28,7 +27,7 @@ const firebaseConfig = {
   appId: REACT_APP_APP_ID,
 };
 
-initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
-export const auth = getAuth();
-export const db = getFirestore();
+export const auth = firebase.auth();
+export const db = firebase.firestore();

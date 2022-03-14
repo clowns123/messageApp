@@ -153,6 +153,7 @@ export const WorkspaceModal = styled.div`
 
 export const Chats = styled.div`
   flex: 1;
+  position: relative;
 `;
 
 export const AddButton = styled.button`

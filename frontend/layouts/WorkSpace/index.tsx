@@ -86,7 +86,6 @@ const WorkSpace: FC = ({ children }) => {
           </MenuScroll>
         </Channels>
         <Chats>
-          no
           <Routes>
             <Route path="/channel/*" element={<Channel />} />
             <Route path="/dm/*" element={<DirectMessage />} />
