@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styled from 'styled-components';
 import { db } from '@utils/firebase';
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { userChannelData, userInfoData } from '@atoms/userInfo';
 
 type Chat = {
   id: string;
@@ -14,31 +16,34 @@ type Chat = {
 };
 
 function ChatBox() {
-  const { chatId } = useParams<{ chatId: string }>();
-  const [value, setValue] = React.useState('');
-  const [chats, setChats] = React.useState<Chat[]>([]);
+  const [value, setValue] = useState('');
   const focus = React.useRef<HTMLDivElement | null>(null);
+  const userInfo = useRecoilValue(userInfoData);
+  const channelName = window.location.pathname.split('/')[3];
+  
+  const { chatId } = useParams<{ chatId: string }>();
+  const [chats, setChats] = useState<Chat[]>([]);
 
-  // React.useEffect(() => {
-  //   let unsubscribe = db
-  //     .collection('chats')
-  //     .doc(chatId)
-  //     .collection('messages')
-  //     .orderBy('date', 'asc')
-  //     .onSnapshot((snapshot) => {
-  //       let chats: Chat[] = [];
-  //       snapshot.forEach((doc) => {
-  //         const msg = doc.data();
-  //         chats.push({ ...msg, id: doc.id, date: msg.date.toDate() } as Chat);
-  //       });
-  //       setChats(chats);
-  //       if (focus.current) focus.current.scrollIntoView();
-  //     });
-  //   return () => {
-  //     setRoom('');
-  //     unsubscribe();
-  //   };
-  // }, [setRoom, chatId]);
+
+  useEffect(() => {
+    let unsubscribe = db
+      .collection('chats')
+      .doc(channelName)
+      .collection('messages')
+      .orderBy('date', 'asc')
+      .onSnapshot((snapshot) => {
+        let chats: Chat[] = [];
+        snapshot.forEach((doc) => {
+          const msg = doc.data();
+          chats.push({ ...msg, id: channelName, date: msg.date.toDate() } as Chat);
+        });
+        setChats(chats);
+        if (focus.current) focus.current.scrollIntoView();
+      });
+    return () => {
+      unsubscribe();
+    };
+  }, [chatId]);
 
   const handleAddMsg = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,23 +51,30 @@ function ChatBox() {
     const msg = {
       msg: value,
       date: new Date(),
-      // name: state.user!.name,
-      // userId: state.user!.id,
+      name: userInfo.name,
+      userId: userInfo.email,
     };
-    db.collection('chats').doc(chatId).collection('messages').add(msg);
+    db.collection('chats').doc(channelName).collection('messages').add(msg);
     setValue('');
   };
 
   return (
-    <form onSubmit={handleAddMsg}>
+    <FromStyle onSubmit={handleAddMsg}>
       <ReactQuillStyle theme="snow" value={value} onChange={setValue} />
-    </form>
+      <SubmitButton>전송</SubmitButton>
+    </FromStyle>
   );
 }
+
+const FromStyle = styled.form``;
 
 const ReactQuillStyle = styled(ReactQuill)`
   width: 100%;
   padding: 10px;
+`;
+
+const SubmitButton = styled.button`
+  margin-left: 10px;
 `;
 
 export default ChatBox;

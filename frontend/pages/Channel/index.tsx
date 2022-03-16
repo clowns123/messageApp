@@ -7,54 +7,35 @@ const Channel = () => {
     console.log('채널입장');
   }, []);
   return (
-    <ChannelWapper>
-      <MessageList>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-        <div>test1</div>
-      </MessageList>
-      <ChatBox />
-    </ChannelWapper>
+    <>
+      <ChannelWapper>
+        <MessageList></MessageList>
+        <ChatBoxWapperStyle>
+          <ChatBox />
+        </ChatBoxWapperStyle>
+      </ChannelWapper>
+    </>
   );
 };
 
 const ChannelWapper = styled.div`
   display: flex;
   flex-flow: column;
-  overflow: hidden;
+  overflow: auto;
+  position: relative;
 `;
 
 const MessageList = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
   overflow-y: auto;
+  height: calc(100vh - 206px);
 `;
 
-const ChatBoxWapperStyle = styled.div``;
+const ChatBoxWapperStyle = styled.div`
+  position: relative;
+  bottom: 0;
+  width: 100%;
+`;
 
 export default Channel;

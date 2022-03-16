@@ -5,6 +5,9 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { CollapseButton } from '@components/MessageList/styles';
+import { useRecoilState } from 'recoil';
+import { loginState } from '@atoms/loginState';
+import { userChannelData } from '@atoms/userInfo';
 
 const ChannelList: FC = () => {
   const { workspace } = useParams<{ workspace?: string }>();
@@ -17,9 +20,14 @@ const ChannelList: FC = () => {
     },
   );
   const [channelCollapse, setChannelCollapse] = useState(false);
+  const [channel, setChannel] = useRecoilState(userChannelData);
+  const channelName = window.location.pathname.split('/')[3];
 
   useEffect(() => {
     console.log('ghkdxogus channelData : ', channelData);
+    if (channelData) {
+      setChannel(channelData);
+    }
   }, [channelData]);
 
   const toggleChannelCollapse = useCallback(() => {
