@@ -20,10 +20,9 @@ function ChatBox() {
   const focus = React.useRef<HTMLDivElement | null>(null);
   const userInfo = useRecoilValue(userInfoData);
   const channelName = window.location.pathname.split('/')[3];
-  
+
   const { chatId } = useParams<{ chatId: string }>();
   const [chats, setChats] = useState<Chat[]>([]);
-
 
   useEffect(() => {
     let unsubscribe = db
