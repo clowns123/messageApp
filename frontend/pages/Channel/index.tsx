@@ -1,8 +1,10 @@
 import ChatBox from '@components/ChatBox';
-import React, { useEffect, useState } from 'react';
+import React, { ReactComponentElement, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { db } from '@utils/firebase';
 import { useParams } from 'react-router-dom';
+import Chat from '@components/Chat';
+import { ChannelWapper, ChatBoxWapperStyle, MessageList } from './styles';
 
 type Chat = {
   id: string;
@@ -15,6 +17,17 @@ type Chat = {
 const Channel = () => {
   const channelName = window.location.pathname.split('/')[3];
   const [chats, setChats] = useState<Chat[]>([]);
+  const chatRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    if (chatRef.current) {
+      chatRef.current?.scrollIntoView({ behavior: 'smooth' });
+      chatRef.current.scrollTop = chatRef.current?.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chats]);
 
   useEffect(() => {
     console.log('채널입장 : ', channelName);
@@ -41,11 +54,12 @@ const Channel = () => {
   return (
     <>
       <ChannelWapper>
-        <MessageList>
+        <MessageList ref={chatRef}>
           {chats.map((el, index) => (
-            <div key={index} dangerouslySetInnerHTML={{ __html: el.msg }}></div>
+            <Chat key={index} data={el} />
           ))}
         </MessageList>
+
         <ChatBoxWapperStyle>
           <ChatBox />
         </ChatBoxWapperStyle>
@@ -53,25 +67,4 @@ const Channel = () => {
     </>
   );
 };
-
-const ChannelWapper = styled.div`
-  display: flex;
-  flex-flow: column;
-  overflow: auto;
-  position: relative;
-`;
-
-const MessageList = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  height: calc(100vh - 206px);
-`;
-
-const ChatBoxWapperStyle = styled.div`
-  position: relative;
-  bottom: 0;
-  width: 100%;
-`;
-
 export default Channel;

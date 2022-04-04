@@ -1,6 +1,6 @@
 import { Ichannel, IUser } from 'types/db';
 import fetcher from '@utils/fetcher';
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router';
 import { NavLink } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { useRecoilState } from 'recoil';
 import { loginState } from '@atoms/loginState';
 import { userChannelData } from '@atoms/userInfo';
 
-const ChannelList: FC = () => {
+const ChannelList = () => {
   const { workspace } = useParams<{ workspace?: string }>();
   const { data: userData } = useQuery<IUser | false>('user', () => fetcher({ queryKey: '/api/users' }), {});
   const { data: channelData } = useQuery<Ichannel[]>(
